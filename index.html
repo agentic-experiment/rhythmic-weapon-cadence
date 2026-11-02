@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0a08">
+  <meta name="description" content="Rhythmic Weapon Cadence — a fourfold circular instrument for measured violence.">
+  <title>Rhythmic Weapon Cadence</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0a08'/%3E%3Ccircle cx='32' cy='32' r='19' fill='none' stroke='%23efe6d4' stroke-opacity='.35'/%3E%3Cpath d='M32 9v46M9 32h46' stroke='%23ff5f3d' stroke-width='1.5'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23efe6d4'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <header class="masthead">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-opacity=".22"/>
+        <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-opacity=".12" stroke-dasharray="1 5"/>
+        <path d="M50 6v88M6 50h88" stroke="currentColor" stroke-opacity=".32"/>
+        <path d="M50 26c5 10 5 14 0 24-5-10-5-14 0-24Zm0 48c-5-10-5-14 0-24 5 10 5 14 0 24ZM26 50c10-5 14-5 24 0-10 5-14 5-24 0Zm48 0c-10 5-14 5-24 0 10-5 14-5 24 0Z" fill="#ff5f3d" fill-opacity=".82"/>
+        <circle cx="50" cy="50" r="3.4" fill="#efe6d4"/>
+      </svg>
+      <div class="brand-copy">
+        <p class="kicker">An instrument of measured violence</p>
+        <h1><em>Rhythmic</em> Weapon Cadence</h1>
+      </div>
+    </div>
+
+    <div class="status" aria-label="Transport status">
+      <div class="status-line">
+        <span class="status-key">Cadence</span>
+        <strong id="cadenceName">OBSIDIAN</strong>
+      </div>
+      <div class="status-line">
+        <span class="status-key">State</span>
+        <span id="transportState" class="transport-state"><i></i>STANDBY</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="stage-wrap" aria-label="Circular weapon sequencer">
+      <div class="stage-glow" aria-hidden="true"></div>
+      <svg id="instrument" class="instrument" viewBox="0 0 1000 1000" role="group" aria-label="Four concentric rings, each with twelve strike nodes">
+        <defs>
+          <radialGradient id="coreGradient" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff8e9"/>
+            <stop offset="34%" stop-color="#ffcf9e"/>
+            <stop offset="72%" stop-color="#ff5f3d" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#ff5f3d" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="coreAura" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ff5f3d" stop-opacity=".13"/>
+            <stop offset="65%" stop-color="#ff5f3d" stop-opacity=".03"/>
+            <stop offset="100%" stop-color="#ff5f3d" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="5" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          <filter id="wideGlow" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="16" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <g id="ornament"></g>
+        <g id="rings"></g>
+        <g id="sigil">
+          <g id="sigilSpin"></g>
+        </g>
+        <g id="fx" class="fx-layer" aria-hidden="true"></g>
+      </svg>
+
+      <div class="stage-caption" aria-hidden="true">
+        <span class="caption-line"></span>
+        <span>Tap a node to arm the strike</span>
+        <span class="pulse-readout"><b id="stepReadout">—</b><span>/ 12</span></span>
+        <span>Tap a weapon to silence it</span>
+        <span class="caption-line"></span>
+      </div>
+    </section>
+
+    <aside class="arsenal" aria-label="Weapon mix">
+      <div class="panel-heading">
+        <span class="kicker">The arsenal</span>
+        <span class="panel-rule"></span>
+        <span class="panel-index">IV</span>
+      </div>
+      <div id="weaponList" class="weapon-list"></div>
+      <p class="arsenal-note">Each ring is a voice.<br>Each node is a wound.</p>
+    </aside>
+  </main>
+
+  <footer class="console">
+    <div class="transport">
+      <button id="playBtn" class="play-btn" type="button" aria-label="Begin cadence">
+        <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5 18 12 8 18.5Z"/></svg>
+        <svg class="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5h3v14H8zM14 5h3v14h-3z"/></svg>
+      </button>
+      <div class="transport-copy">
+        <span class="label">Transport</span>
+        <strong id="playLabel">Begin cadence</strong>
+      </div>
+    </div>
+
+    <div class="tempo">
+      <div class="control-head">
+        <label class="label" for="bpm">Tempo</label>
+        <output id="bpmValue" for="bpm">92 <span>BPM</span></output>
+      </div>
+      <input id="bpm" class="range" type="range" min="56" max="160" value="92" step="1" aria-label="Tempo in beats per minute">
+    </div>
+
+    <div class="presets">
+      <span class="label">Cadence</span>
+      <div class="preset-row" role="group" aria-label="Cadence presets">
+        <button class="preset is-active" type="button" data-preset="OBSIDIAN">Obsidian</button>
+        <button class="preset" type="button" data-preset="PROCESSION">Procession</button>
+        <button class="preset" type="button" data-preset="FRACTURE">Fracture</button>
+        <button class="preset" type="button" data-preset="LULLABY">Lullaby</button>
+        <button id="forgeBtn" class="preset preset-forge" type="button">Forge <span aria-hidden="true">✦</span></button>
+        <button id="clearBtn" class="preset preset-clear" type="button" aria-label="Clear all strikes">Clear</button>
+      </div>
+    </div>
+
+    <div class="volume">
+      <label class="label" for="volume">Volume</label>
+      <div class="volume-row">
+        <svg class="volume-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path id="volumeWave" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>
+        <input id="volume" class="range range-volume" type="range" min="0" max="100" value="78" step="1" aria-label="Master volume">
+      </div>
+    </div>
+
+    <p class="console-hint" aria-hidden="true"><kbd>Space</kbd> transport <span>·</span> <kbd>1–4</kbd> silence <span>·</span> <kbd>R</kbd> forge</p>
+  </footer>
+
+  <div id="liveStatus" class="sr-only" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
